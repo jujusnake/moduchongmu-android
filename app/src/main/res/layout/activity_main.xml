@@ -32,25 +32,16 @@
             android:layout_gravity="bottom|center_horizontal"
             android:indeterminateTint="@color/white"
             />
-
-        <!-- Add any splash image or progress bar -->
-<!--        <ImageView-->
-<!--            android:id="@+id/splashImage"-->
-<!--            android:layout_width="300dp"-->
-<!--            android:layout_height="300dp"-->
-<!--            android:src="@drawable/ic_launcher_foreground"-->
-<!--            android:layout_gravity="center"-->
-<!--            />-->
     </FrameLayout>
 
-<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--        android:id="@+id/swipeContainer"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        >-->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

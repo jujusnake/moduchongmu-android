@@ -25,6 +25,7 @@ import androidx.core.content.FileProvider
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.exceptions.NoCredentialException
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.kakao.sdk.auth.model.OAuthToken
@@ -44,6 +45,8 @@ import java.util.Objects
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var swipeRefresh : SwipeRefreshLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -59,10 +62,10 @@ class MainActivity : AppCompatActivity() {
         var isFirstLoadingFinished= false
 
         // Swipe to Refresh
-//        val swipeRefresh = findViewById<SwipeRefreshLayout>(R.id.swipeContainer)
-//        swipeRefresh.setOnRefreshListener {
-//            webView.reload()
-//        }
+        swipeRefresh = findViewById<SwipeRefreshLayout>(R.id.swipeContainer)
+        swipeRefresh.setOnRefreshListener {
+            webView.reload()
+        }
 
         lottieAnimationView.addAnimatorListener(object: Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
@@ -115,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                         lottieAnimationView.removeAllAnimatorListeners()
                     }.start()
                 }
-//                swipeRefresh.isRefreshing = false
+                swipeRefresh.isRefreshing = false
             }
         }
 
@@ -141,6 +144,9 @@ class MainActivity : AppCompatActivity() {
         (webView.webChromeClient as? MyWebChromeClient)?.handleActivityResult(requestCode, resultCode, data)
     }
 
+    fun getSwipeRefreshLayout(): SwipeRefreshLayout {
+        return swipeRefresh
+    }
 }
 
 
@@ -150,6 +156,14 @@ class MyJavaScriptInterface(private val context: Context, private val webView: W
     fun sendMessage(message: String) {
         // This is where you handle the message sent from JavaScript
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    @JavascriptInterface
+    fun updateSwipeRefresher(enabled: Boolean) {
+        if (context is MainActivity) {
+            val swipeRefresh = context.getSwipeRefreshLayout()
+            swipeRefresh.isEnabled = enabled
+        }
     }
 
     @JavascriptInterface
